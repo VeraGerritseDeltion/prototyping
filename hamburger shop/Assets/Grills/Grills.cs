@@ -58,9 +58,9 @@ public class Grills : MonoBehaviour {
 
     public void Drop()
     {
-        if (selectedGrill != null)
+        if (selectedGrill != null && usedGrill != null)
         {
-            if (selectedGrill.burger == null && usedGrill != null)
+            if (selectedGrill.burger == null && usedGrill.burger != null)
             {
                 selectedGrill.burger = toMove;
                 usedGrill.burger = null;
@@ -80,8 +80,11 @@ public class Grills : MonoBehaviour {
         else
         {
              onMouse.enabled = false;
-             usedGrill.burger.hamburger.enabled = true;
-             usedGrill.burger.pickedUp = false;
+            if (usedGrill != null)
+            {
+                usedGrill.burger.hamburger.enabled = true;
+                usedGrill.burger.pickedUp = false;
+            }
         }
     }
 }

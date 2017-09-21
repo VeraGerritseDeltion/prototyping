@@ -19,6 +19,7 @@ public class Hamburger : MonoBehaviour {
     // Use this for initialization
     void Start () {
         hamburger = gameObject.GetComponent<Image>();
+        hB2d = raw2d;
         hamburger.sprite = raw2d;
 	}
 
@@ -31,10 +32,12 @@ public class Hamburger : MonoBehaviour {
         if (timer > rawTime && timer < cookedTime)
         {
             hamburger.sprite = cooked2d;
+            hB2d = cooked2d;
             cooked = true;
         }
         if(timer > cookedTime)
         {
+            hB2d = burned2d;
             burned = true;
             hamburger.sprite = burned2d;
         }
