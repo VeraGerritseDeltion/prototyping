@@ -590,7 +590,7 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 2
-  cloudProjectId: 73e2da42-50b6-4ea4-b5e1-d721d26f3036
+  cloudProjectId: 
   projectName: hamburger shop
   organizationId: killergirl97
   cloudEnabled: 0
