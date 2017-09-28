@@ -55,9 +55,10 @@ public class NewOrderManager : MonoBehaviour {
 
     public void Drag(NewOrder toDrag,TicketHolder usedHolderTime)
     {
-        usedHolder = usedHolderTime;
+        if(toDrag != null) { usedHolder = usedHolderTime;
         usedHolder.newOrder.transform.position = Input.mousePosition;
-        usedHolder.newOrder.transform.SetParent(gameObject.transform);
+        usedHolder.newOrder.transform.SetParent(gameObject.transform);}
+        
 
     }
     public void Drop()

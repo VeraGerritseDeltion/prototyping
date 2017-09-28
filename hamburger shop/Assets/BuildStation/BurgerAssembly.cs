@@ -66,7 +66,7 @@ public class BurgerAssembly : MonoBehaviour {
         {
             part = 4;
             finalBurger.Add(part);
-            SmallSpace();
+            BigSpace();
         }
     }
 
