@@ -34,6 +34,6 @@ public class TicketHolder : MonoBehaviour {
     }
     public void Drop()
     {
-        orderManager.Drop();
+        orderManager.Drop(this);
     }
 }

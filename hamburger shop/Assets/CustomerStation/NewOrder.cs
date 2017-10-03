@@ -10,8 +10,13 @@ public class NewOrder : MonoBehaviour {
     public List<Sprite> parts = new List<Sprite>();
     public int amount;
     public bool meatInside;
+    public float timeBeforeGone = 10;
+    public float times;
+    public int currentTime;
+    public Text text;
 	
 	void Start () {
+        timeBeforeGone = 25;
         int rand = Random.Range(3, 6);
 
         for(int i = 0;i < rand; i++)
@@ -37,9 +42,17 @@ public class NewOrder : MonoBehaviour {
         ingredients[amount].sprite = parts[0];
         ingredients[amount].enabled = true;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void Update()
+    {
+        timeBeforeGone -= Time.deltaTime;
+        currentTime = Mathf.RoundToInt(timeBeforeGone);
+        text.text = currentTime.ToString();
+        if (currentTime == 0)
+        {
+            TicketHolder parent = GetComponentInParent<TicketHolder>();
+            parent.newOrder = null;
+            Destroy(gameObject);
+        }
+    }
 }

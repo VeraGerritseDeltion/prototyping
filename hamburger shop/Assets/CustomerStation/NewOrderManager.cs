@@ -61,9 +61,9 @@ public class NewOrderManager : MonoBehaviour {
         
 
     }
-    public void Drop()
+    public void Drop(TicketHolder used)
     {
-        if(selectedTicket != null)
+        if(selectedTicket != null && used != null && used.newOrder != null)
         {
             if (selectedTicket.newOrder == null)
             {
@@ -88,7 +88,7 @@ public class NewOrderManager : MonoBehaviour {
                 usedHolder.newOrder.transform.localScale = new Vector3(1, 1, 1);
             }
         }
-        else
+        else if(used != null && used.newOrder != null)
         {
             usedHolder.newOrder.transform.position = usedHolder.transform.position;
         }

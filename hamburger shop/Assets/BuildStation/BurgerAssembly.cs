@@ -16,23 +16,57 @@ public class BurgerAssembly : MonoBehaviour {
     public Image checkMark;
     public int price = 3;
     public float score;
+    public Image hamburger;
+    public bool finished;
 
     private void Start()
     {
         currentLoc = startBurger;
     }
 
+    private void Update()
+    {
+        List<Hamburger> burger = CookingStationManager.finishedHamburgers;
+        if (burger.Count != 0)
+        {
+            if (burger[0].cooked == true && burger[0].burned != true)
+            {
+                hamburger.sprite = burgerParts[5];
+                hamburger.enabled = true;
+            }
+            else if (burger[0].burned == true)
+            {
+                hamburger.sprite = burgerParts[6];
+                hamburger.enabled = true;
+            }
+            else
+            {
+                hamburger.sprite = burgerParts[7];
+                hamburger.enabled = true;
+            }
+        }
+        else
+        {
+            hamburger.enabled = false;
+        }
+    }
+
     public void TopBun()
     {
-        part = 0;
-        finalBurger.Add(part);
-        BigSpace();
-        TopOfBurger();
+        if (!finished)
+        {
+            part = 0;
+            finalBurger.Add(part);
+            BigSpace();
+            TopOfBurger();
+            finished = true;
+        }
+        
     }
 
     public void Lettuce()
     {
-        if (finalBurger.Count < 5)
+        if (finalBurger.Count < 5 && !finished)
         {
             part = 1;
             finalBurger.Add(part);
@@ -42,7 +76,7 @@ public class BurgerAssembly : MonoBehaviour {
 
     public void Tomato()
     {
-        if (finalBurger.Count < 5)
+        if (finalBurger.Count < 5 && !finished)
         {
             part = 2;
             finalBurger.Add(part);
@@ -52,7 +86,7 @@ public class BurgerAssembly : MonoBehaviour {
 
     public void Cheese()
     {
-        if (finalBurger.Count < 5)
+        if (finalBurger.Count < 5 && !finished)
         {
             part = 3;
             finalBurger.Add(part);
@@ -62,7 +96,7 @@ public class BurgerAssembly : MonoBehaviour {
 
     public void Bun()
     {
-        if (finalBurger.Count < 5)
+        if (finalBurger.Count < 5 && !finished)
         {
             part = 4;
             finalBurger.Add(part);
@@ -72,7 +106,7 @@ public class BurgerAssembly : MonoBehaviour {
 
     public void Burger()
     {
-        if (finalBurger.Count < 5)
+        if (finalBurger.Count < 5 && !finished)
         {
             List<Hamburger> burger = CookingStationManager.finishedHamburgers;
             print(burger.Count);
@@ -129,18 +163,24 @@ public class BurgerAssembly : MonoBehaviour {
             {
                 Destroy(parts[i]);
             }
-            Destroy(orderManager.allTicketPlaces[0].newOrder.gameObject);
-            orderManager.allTicketPlaces[0].newOrder = null;
+            int o = getTicket();
+            if(getTicket()!= -1)
+            {
+                Destroy(orderManager.allTicketPlaces[o].newOrder.gameObject);
+                orderManager.allTicketPlaces[o].newOrder = null;
+            }            
             parts.Clear();
             currentLoc = startBurger;
             finalBurger.Clear();
-
+            finished = false;
         }
 
         public void TopOfBurger()
         {
-            List<int> order = orderManager.allTicketPlaces[0].newOrder.requestedBurger;
-            int amount = orderManager.allTicketPlaces[0].newOrder.amount + 1;
+            if(getTicket() != -1)
+            {
+            List<int> order = orderManager.allTicketPlaces[getTicket()].newOrder.requestedBurger;
+            int amount = orderManager.allTicketPlaces[getTicket()].newOrder.amount + 1;
             int total = 0;
             int tooMuch = 0;
             int howTooMuch = 0;
@@ -177,6 +217,20 @@ public class BurgerAssembly : MonoBehaviour {
             score += total;
             print("score: " + score);
             
+
+            }
             StartCoroutine(DestroyBurger());
         }
+        public int getTicket()
+    {
+        int i = 0;
+        for(i=0;i < orderManager.allTicketPlaces.Count;i++)
+        {
+            if(orderManager.allTicketPlaces[i].newOrder != null)
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
